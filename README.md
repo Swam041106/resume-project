@@ -74,6 +74,11 @@ resume-builder/
 * User login & authentication
 
 ---
+<img width="822" height="1079" alt="image" src="https://github.com/user-attachments/assets/1970e7f8-29a6-4091-a321-a80b3e6d7cfc" />
+<img width="562" height="770" alt="image" src="https://github.com/user-attachments/assets/febd6efe-189c-4304-8e3e-b70bf50e584b" />
+
+
+---
 
 🙌 Author
 
