@@ -1,0 +1,41 @@
+/* ================= JOB APPLICATION ================= */
+<!DOCTYPE html>
+<html>
+<head><title>Jobs</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="nav"><a href="index.html">Home</a></div>
+<div class="container">
+<h1>Job Applications</h1>
+<form>
+<input placeholder="Company">
+<input placeholder="Role">
+<select>
+<option>Applied</option>
+<option>Interview</option>
+<option>Rejected</option>
+</select>
+<input type="date">
+<button type="submit">Add</button>
+</form>
+</div>
+
+<script>
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const inputs = e.target.querySelectorAll('input, select');
+  const body = {
+    company: inputs[0].value,
+    role:    inputs[1].value,
+    status:  inputs[2].value,
+    date:    inputs[3].value,
+  };
+  const res = await fetch('http://localhost:3000/api/jobs', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  alert(data.success ? '✅ Job added!' : '❌ Error');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+/* ================= TEMPLATE ================= */
+<!DOCTYPE html>
+<html>
+<head><title>Template</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="nav"><a href="index.html">Home</a></div>
+<div class="container">
+<h1>Resume Template</h1>
+<form>
+<input placeholder="Template Name">
+<select>
+<option>Modern</option>
+<option>Classic</option>
+</select>
+<button type="submit">Add</button>
+</form>
+</div>
+
+<script>
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const body = {
+    name:  e.target.querySelector('input').value,
+    style: e.target.querySelector('select').value,
+  };
+  const res = await fetch('http://localhost:3000/api/templates', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  alert(data.success ? '✅ Template selected!' : '❌ Error');
+});
+</script>
+</body>
+</html>

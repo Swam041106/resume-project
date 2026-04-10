@@ -1,0 +1,30 @@
+/* ================= PLATFORMS ================= */
+<!DOCTYPE html>
+<html>
+<head><title>Platforms</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="nav"><a href="index.html">Home</a></div>
+<div class="container">
+<h1>Platforms</h1>
+<form>
+<input placeholder="Platform Name (GitHub, LeetCode)">
+<input placeholder="Profile Link">
+<button type="submit">Add</button>
+</form>
+</div>
+</body>
+
+<script>
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const inputs = e.target.querySelectorAll('input');
+  const body = { platform: inputs[0].value, link: inputs[1].value };
+  const res = await fetch('http://localhost:3000/api/platforms', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  alert(data.success ? '✅ Platform added!' : '❌ Error');
+});
+</script>
+</html

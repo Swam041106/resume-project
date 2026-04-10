@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Candidate</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="nav">
+  <a href="index.html">Home</a>
+</div>
+
+<div class="container">
+  <h1>Candidate</h1>
+  <form>
+    <input type="text" placeholder="Candidate ID" required>
+    <input type="text" placeholder="First Name" required>
+    <input type="text" placeholder="Last Name">
+    <input type="email" placeholder="Email" required>
+    <input type="text" placeholder="Phone">
+    <input type="date">
+    <select>
+      <option>Male</option>
+      <option>Female</option>
+    </select>
+    <button type="submit">Add</button>
+  </form>
+</div>
+
+<script>
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const inputs = e.target.querySelectorAll('input, select');
+  const body = {
+    candidateId: inputs[0].value,
+    firstName:   inputs[1].value,
+    lastName:    inputs[2].value,
+    email:       inputs[3].value,
+    phone:       inputs[4].value,
+    dob:         inputs[5].value,
+    gender:      inputs[6].value,
+  };
+  const res = await fetch('http://localhost:3000/api/candidates', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  alert(data.success ? '✅ Candidate added!' : '❌ Error');
+});
+</script>
+</body>
+</html>

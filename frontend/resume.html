@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Resume</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="background: #EFEBE9; padding: 20px;">
+
+<div id="resume-wrapper">
+  <h1 style="text-align: center; color: #3E2723; margin-top: 50px;">Generating Your Professional Resume...</h1>
+</div>
+
+<script>
+async function loadResume() {
+  try {
+    const res = await fetch('http://localhost:3000/api/resume');
+    const data = await res.json();
+    const wrapper = document.getElementById('resume-wrapper');
+
+    // Destructuring data for easier access
+    const candidate = data.candidate[0] || {};
+    const profile = data.profile[0] || {};
+
+    wrapper.innerHTML = `
+      <div class="resume-container">
+        
+        <div class="sidebar">
+          <div class="profile-img-placeholder">
+             ${candidate.firstName?.charAt(0) || ''}${candidate.lastName?.charAt(0) || ''}
+          </div>
+          
+          <section class="sidebar-section">
+            <h3>CONTACT</h3>
+            <p>📍 ${candidate.address || 'City, Country'}</p>
+            <p>📞 ${candidate.phone || 'Phone Number'}</p>
+            <p>✉️ ${candidate.email || 'Email Address'}</p>
+          </section>
+
+          <section class="sidebar-section">
+            <h3>SKILLS</h3>
+            <div class="skill-tags">
+              ${data.skills.map(s => `
+                <div class="skill-pill">
+                  <span>${s.skillName}</span>
+                  <small>${s.level}</small>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+
+          <section class="sidebar-section">
+            <h3>LANGUAGES</h3>
+            ${data.languages?.map(l => `<p>${l.languageName} — <i>${l.proficiency}</i></p>`).join('') || '<p>English (Native)</p>'}
+          </section>
+        </div>
+
+        <div class="main-content">
+          <header class="resume-header">
+            <h1>${candidate.firstName || 'First'} <span>${candidate.lastName || 'Last'}</span></h1>
+            <p class="tagline">${profile.bio || 'Professional Specialist'}</p>
+          </header>
+
+          <section class="main-section">
+            <h2 class="section-title">💼 WORK EXPERIENCE</h2>
+            ${data.experience.map(e => `
+              <div class="experience-item">
+                <div class="item-header">
+                  <strong>${e.role}</strong>
+                  <span>${e.startDate} - ${e.endDate}</span>
+                </div>
+                <p class="company-name">${e.company}</p>
+                <p class="description">${e.description || 'Led key initiatives and improved team productivity through strategic planning.'}</p>
+              </div>
+            `).join('')}
+          </section>
+
+          <section class="main-section">
+            <h2 class="section-title">🎓 EDUCATION</h2>
+            ${data.education.map(e => `
+              <div class="education-item">
+                <div class="item-header">
+                  <strong>${e.degree}</strong>
+                  <span>${e.startYear} - ${e.endYear}</span>
+                </div>
+                <p>${e.college}</p>
+              </div>
+            `).join('')}
+          </section>
+
+          <section class="main-section">
+            <h2 class="section-title">📁 PROJECTS</h2>
+            <div class="project-grid">
+              ${data.projects.map(p => `
+                <div class="project-item">
+                  <strong>${p.title}</strong>
+                  <p>${p.techStack}</p>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div class="no-print" style="text-align:center; margin-top: 30px;">
+        <button onclick="window.print()" class="download-btn">
+          📥 Download PDF Resume
+        </button>
+        <button onclick="window.location.href='index.html'" class="back-btn">
+          🏠 Back to Dashboard
+        </button>
+      </div>
+    `;
+  } catch (error) {
+    console.error("Error loading resume:", error);
+  }
+}
+
+loadResume();
+</script>
+
+<style>
+/* INTERNAL RESUME STYLES */
+:root {
+  --resume-dark: #3E2723;
+  --resume-mocha: #5D4037;
+  --resume-accent: #A1887F;
+  --resume-cream: #FDFBF9;
+}
+
+.resume-container {
+  display: flex;
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  min-height: 1100px; /* A4 Ratio approximation */
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 30%;
+  background: var(--resume-dark);
+  color: white;
+  padding: 40px 25px;
+}
+
+.profile-img-placeholder {
+  width: 100px;
+  height: 100px;
+  background: var(--resume-accent);
+  border-radius: 50%;
+  margin: 0 auto 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.sidebar-section h3 {
+  font-size: 14px;
+  letter-spacing: 2px;
+  border-bottom: 1px solid var(--resume-accent);
+  padding-bottom: 5px;
+  margin-top: 30px;
+}
+
+.sidebar-section p { font-size: 12px; color: #D7CCC8; line-height: 1.6; }
+
+.skill-pill {
+  background: rgba(255,255,255,0.1);
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+/* Main Content Styling */
+.main-content {
+  width: 70%;
+  padding: 50px;
+  background: var(--resume-cream);
+}
+
+.resume-header h1 { font-size: 40px; margin: 0; color: var(--resume-dark); text-transform: uppercase; }
+.resume-header h1 span { color: var(--resume-mocha); font-weight: 300; }
+.tagline { font-size: 18px; color: var(--resume-accent); margin-top: 5px; font-weight: 600; }
+
+.section-title {
+  font-size: 16px;
+  color: var(--resume-mocha);
+  border-bottom: 2px solid var(--resume-accent);
+  margin-top: 40px;
+  padding-bottom: 5px;
+}
+
+.item-header { display: flex; justify-content: space-between; margin-top: 15px; }
+.company-name { color: var(--resume-accent); font-weight: 600; margin: 2px 0; }
+.description { font-size: 13px; color: #555; line-height: 1.5; }
+
+/* Buttons */
+.download-btn, .back-btn {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 700;
+  margin: 10px;
+  transition: 0.3s;
+}
+.download-btn { background: var(--resume-dark); color: white; }
+.back-btn { background: var(--resume-accent); color: white; }
+
+/* Print Handling */
+@media print {
+  body { background: white; padding: 0; }
+  .no-print { display: none; }
+  .resume-container { box-shadow: none; margin: 0; max-width: 100%; border-radius: 0; }
+}
+</style>
+
+</body>
+</html>

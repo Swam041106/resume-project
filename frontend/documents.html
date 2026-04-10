@@ -1,0 +1,30 @@
+/* ================= RAW DOCUMENTS ================= */
+<!DOCTYPE html>
+<html>
+<head><title>Documents</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="nav"><a href="index.html">Home</a></div>
+<div class="container">
+<h1>Raw Documents</h1>
+<form>
+<input type="file">
+<input placeholder="Document Type">
+<button type="submit">Add</button>
+</form>
+</div>
+
+<script>
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append('file',    e.target.querySelector('input[type=file]').files[0]);
+  formData.append('docType', e.target.querySelectorAll('input')[1].value);
+  const res = await fetch('http://localhost:3000/api/documents', {
+    method: 'POST', body: formData   // No Content-Type header for file uploads!
+  });
+  const data = await res.json();
+  alert(data.success ? '✅ Document uploaded!' : '❌ Error');
+});
+</script>
+</body>
+</html>

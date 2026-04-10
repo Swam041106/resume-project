@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="nav">
+  <a href="index.html">Home</a>
+</div>
+
+<div class="container">
+  <h1>Profile</h1>
+  <form>
+    <input type="text" placeholder="Candidate ID">
+    <textarea placeholder="Bio"></textarea>
+    <input type="text" placeholder="City">
+    <input type="text" placeholder="Country">
+    <input type="text" placeholder="LinkedIn">
+    <input type="text" placeholder="GitHub">
+    <input type="text" placeholder="Portfolio">
+    <button type="submit">Add</button>
+  </form>
+</div>
+
+<script>
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const inputs = e.target.querySelectorAll('input, textarea');
+  const body = {
+    candidateId: inputs[0].value,
+    bio:         inputs[1].value,
+    city:        inputs[2].value,
+    country:     inputs[3].value,
+    linkedin:    inputs[4].value,
+    github:      inputs[5].value,
+    portfolio:   inputs[6].value,
+  };
+  const res = await fetch('http://localhost:3000/api/profile', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  alert(data.success ? '✅ Profile saved!' : '❌ Error');
+});
+</script>
+</body>
+</html>

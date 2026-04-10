@@ -1,0 +1,38 @@
+
+/* ================= PROJECTS ================= */
+<!DOCTYPE html>
+<html>
+<head><title>Projects</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="nav"><a href="index.html">Home</a></div>
+<div class="container">
+<h1>Projects</h1>
+<form>
+<input placeholder="Title">
+<textarea placeholder="Description"></textarea>
+<input placeholder="Tech Stack">
+<input placeholder="GitHub Link">
+<button type="submit">Add</button>
+</form>
+</div>
+
+<script>
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const inputs = e.target.querySelectorAll('input, textarea');
+  const body = {
+    title:       inputs[0].value,
+    description: inputs[1].value,
+    techStack:   inputs[2].value,
+    githubLink:  inputs[3].value,
+  };
+  const res = await fetch('http://localhost:3000/api/projects', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  alert(data.success ? '✅ Project added!' : '❌ Error');
+});
+</script>
+</body>
+</html>

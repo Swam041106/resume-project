@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Skills</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="nav">
+  <a href="index.html">Home</a>
+</div>
+
+<div class="container">
+  <h1>Skills</h1>
+  <form>
+    <input type="text" placeholder="Skill Name">
+    <select>
+      <option>Beginner</option>
+      <option>Intermediate</option>
+      <option>Advanced</option>
+    </select>
+    <button type="submit">Add</button>
+  </form>
+</div>
+
+<script>
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const body = {
+    skillName: e.target.querySelector('input').value,
+    level:     e.target.querySelector('select').value,
+  };
+  const res = await fetch('http://localhost:3000/api/skills', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  alert(data.success ? '✅ Skill added!' : '❌ Error');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Experience</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="nav">
+  <a href="index.html">Home</a>
+</div>
+
+<div class="container">
+  <h1>Work Experience</h1>
+  <form>
+    <input type="text" placeholder="Company">
+    <input type="text" placeholder="Role">
+    <input type="date">
+    <input type="date">
+    <textarea placeholder="Description"></textarea>
+    <button type="submit">Add</button>
+  </form>
+</div>
+
+<script>
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const inputs = e.target.querySelectorAll('input, textarea');
+  const body = {
+    company:     inputs[0].value,
+    role:        inputs[1].value,
+    startDate:   inputs[2].value,
+    endDate:     inputs[3].value,
+    description: inputs[4].value,
+  };
+  const res = await fetch('http://localhost:3000/api/experience', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  alert(data.success ? '✅ Experience added!' : '❌ Error');
+});
+</script>
+</body>
+</html>

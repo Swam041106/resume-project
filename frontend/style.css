@@ -1,0 +1,151 @@
+/* ===== THEME VARIABLES ===== */
+:root {
+  --deep-brown: #3E2723;      /* Espresso */
+  --medium-brown: #5D4037;    /* Mocha */
+  --soft-beige: #D7CCC8;      /* Oat */
+  --warm-cream: #FDFBF9;      /* Eggshell */
+  --accent-gold: #A1887F;     /* Muted Gold/Clay */
+  --bg-color: #EFEBE9;        /* Warm Stone */
+  --text-light: #FDFBF9;
+  --text-dark: #2D1B18;
+  --radius: 20px;
+  --shadow-rich: 0 15px 35px rgba(62, 39, 35, 0.15);
+  --transition: all 0.4s ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+}
+
+/* ===== NAVBAR ===== */
+.nav {
+  background: var(--deep-brown);
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav a {
+  color: var(--soft-beige);
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  transition: var(--transition);
+}
+
+.nav a:hover {
+  background: var(--medium-brown);
+  color: var(--warm-cream);
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  background: linear-gradient(rgba(62, 39, 35, 0.8), rgba(62, 39, 35, 0.8)), 
+              url('https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&q=80&w=1200');
+  background-size: cover;
+  background-position: center;
+  padding: 80px 20px;
+  text-align: center;
+  color: var(--warm-cream);
+}
+
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+  font-weight: 800;
+}
+
+/* ===== DASHBOARD GRID (3 COLUMNS) ===== */
+.entity-grid {
+  display: grid;
+  /* FORCES 3 COLUMNS */
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 25px;
+  padding: 50px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ===== IMAGE CARD STYLING ===== */
+.img-card {
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius);
+  position: relative;
+  text-decoration: none;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: var(--shadow-rich);
+  transition: var(--transition);
+  border: 1px solid var(--soft-beige);
+}
+
+.img-card-label {
+  width: 100%;
+  padding: 18px;
+  background: rgba(62, 39, 35, 0.85); /* Espresso with transparency */
+  color: var(--warm-cream);
+  font-weight: 600;
+  text-align: center;
+  font-size: 15px;
+  backdrop-filter: blur(5px); /* Modern frosted look */
+  transition: var(--transition);
+}
+
+/* Hover Effects */
+.img-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(62, 39, 35, 0.25);
+}
+
+.img-card:hover .img-card-label {
+  background: var(--deep-brown); /* Darkens on hover */
+  padding-bottom: 25px; /* Slight lift effect */
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  color: var(--medium-brown);
+  background: var(--soft-beige);
+  padding: 40px 0;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 12px;
+  margin-top: 50px;
+}
+
+/* ===== RESPONSIVE (Adapts for Mobile) ===== */
+@media (max-width: 900px) {
+  .entity-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+  }
+}
+
+@media (max-width: 600px) {
+  .entity-grid {
+    grid-template-columns: 1fr; /* 1 column on phones */
+  }
+  .hero h1 {
+    font-size: 32px;
+  }
+}

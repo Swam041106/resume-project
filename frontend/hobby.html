@@ -1,0 +1,32 @@
+/* ================= HOBBY ================= */
+<!DOCTYPE html>
+<html>
+<head><title>Hobby</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="nav"><a href="index.html">Home</a></div>
+<div class="container">
+<h1>Hobbies</h1>
+<form>
+<input placeholder="Hobby Name">
+<textarea placeholder="Description"></textarea>
+<button type="submit">Add</button>
+</form>
+</div>
+
+<script>
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const body = {
+    hobby:       e.target.querySelector('input').value,
+    description: e.target.querySelector('textarea').value,
+  };
+  const res = await fetch('http://localhost:3000/api/hobbies', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  alert(data.success ? '✅ Hobby added!' : '❌ Error');
+});
+</script>
+</body>
+</html>
